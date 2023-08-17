@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    
+    <style>
+        th {
+            color: #ffffff;
+        }
+        /* Add some styling for the product links */
+        td a {
+            color: #007bff; /* Blue color for links */
+            text-decoration: none; /* Remove underline from links */
+        }
+        td a:hover {
+            text-decoration: underline; /* Underline the link on hover */
+        }
+    </style>
+</head>
+<body>
+    <table class="table table-striped">
+        <tr class="bg-info">
+            <th>PRODUCTID</th>
+            <th>PRODUCTNAME</th>
+            <th>QUANTITY</th>
+            <th>MRP</th>
+        </tr>
+        <tbody id="myTable">
+        </tbody>
+    </table>
+
+    <script>
+        var myArray = [
+            {'PRODUCTID': 10001, 'PRODUCTNAME': 'iphone', 'QUANTITY': '10', 'MRP': '60,000'},
+            {'PRODUCTID': 10002, 'PRODUCTNAME': 'Jeans', 'QUANTITY': '20', 'MRP': '1,500'},
+            {'PRODUCTID': 10003, 'PRODUCTNAME': 'airpods', 'QUANTITY': '45', 'MRP': '1,400'},
+            {'PRODUCTID': 10004, 'PRODUCTNAME': 'lays', 'QUANTITY': '39', 'MRP': '10'},
+        ];
+
+        buildTable(myArray);
+
+        function buildTable(data) {
+            var table = document.getElementById('myTable');
+
+            for (var i = 0; i < data.length; i++) {
+                var row = `<tr>
+                    <td>${data[i].PRODUCTID}</td>
+                    <td><a href="javascript:void(0);" onclick="storeProductDetails(${i})">${data[i].PRODUCTNAME}</a></td>
+                    <td>${data[i].QUANTITY}</td>
+                    <td>${data[i].MRP}</td>
+                </tr>`;
+                table.innerHTML += row;
+            }
+        }
+
+        function storeProductDetails(index) {
+            var product = myArray[index];
+            if (product) {
+                sessionStorage.setItem('selectedProduct', JSON.stringify(product));
+                console.log(`Product "${product.PRODUCTNAME}" details stored in session storage.`);
+                
+                
+                window.location.href = 'product_details.html'; 
+            } else {
+                console.error('Product details not found.');
+            }
+        }
+    </script>
+</body>
+</html>
